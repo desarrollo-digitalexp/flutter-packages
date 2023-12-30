@@ -198,6 +198,13 @@ NSString *const errorMethod = @"error";
   if ([_captureDevice position] == AVCaptureDevicePositionFront) {
     connection.videoMirrored = YES;
   }
+    
+  if (connection.isVideoStabilizationSupported) {
+    connection.preferredVideoStabilizationMode = AVCaptureVideoStabilizationModeStandard;
+      AVCaptureVideoStabilizationMode stabilizationMode = connection.activeVideoStabilizationMode;
+      NSLog(@"PRINT stabilizationMode");
+      NSLog(@"%d", stabilizationMode);
+  }
 
   return connection;
 }
@@ -941,6 +948,14 @@ NSString *const errorMethod = @"error";
   if (oldConnection && newConnection.isVideoOrientationSupported) {
     newConnection.videoOrientation = oldConnection.videoOrientation;
   }
+    
+  // Keep the same orientation the old connections had.
+    NSLog(@"PRINT isVideoStabilizationSupported START");
+  if (oldConnection && newConnection.isVideoStabilizationSupported) {
+      newConnection.preferredVideoStabilizationMode = AVCaptureVideoStabilizationModeAuto;
+  }
+    
+  NSLog(@"PRINT isVideoStabilizationSupported END");
 
   // Add the new connections to the session.
   if (![_videoCaptureSession canAddInput:_captureVideoInput])
