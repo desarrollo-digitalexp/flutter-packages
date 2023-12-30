@@ -172,6 +172,15 @@ NSString *const errorMethod = @"error";
     return nil;
   }
   [self updateOrientation];
+    
+    if (connection.isVideoStabilizationSupported) {
+      connection.preferredVideoStabilizationMode = AVCaptureVideoStabilizationModeAuto;
+        AVCaptureVideoStabilizationMode stabilizationMode = connection.activeVideoStabilizationMode;
+        NSLog(@"PRINT stabilizationMode");
+        NSLog(@"%d", stabilizationMode);
+    }
+    
+    
 
   return self;
 }
