@@ -30,6 +30,7 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
 import android.util.Log;
+import android.util.Range;
 import android.util.Size;
 import android.view.Display;
 import android.view.Surface;
@@ -468,14 +469,44 @@ class Camera
 
     // Start the session.
     if (SdkCapabilityChecker.supportsSessionConfiguration()) {
+
+      Log.w(TAG, "Android Device supports session configuration");
       // Collect all surfaces to render to.
       List<OutputConfiguration> configs = new ArrayList<>();
       configs.add(new OutputConfiguration(flutterSurface));
       for (Surface surface : remainingSurfaces) {
         configs.add(new OutputConfiguration(surface));
       }
-      createCaptureSessionWithSessionConfig(configs, callback);
+
+       CameraManager cameraManager = CameraUtils.getCameraManager(activity);
+
+      CameraCharacteristics characteristics = cameraManager.getCameraCharacteristics(cameraProperties.getCameraName());
+
+      int[] capabilities = characteristics.get(
+              CameraCharacteristics.REQUEST_AVAILABLE_CAPABILITIES);
+
+      int sessionConfiguration = SessionConfiguration.SESSION_REGULAR;
+
+      for (int i = 0; i < capabilities.length ; i++) {
+        int capability = capabilities[i];
+        if (capability == CameraMetadata.REQUEST_AVAILABLE_CAPABILITIES_CONSTRAINED_HIGH_SPEED_VIDEO){
+          sessionConfiguration = SessionConfiguration.SESSION_HIGH_SPEED;
+          previewRequestBuilder.set(CaptureRequest.CONTROL_AE_TARGET_FPS_RANGE, new Range<Integer>(120, 120));
+          Log.w(TAG, "Android High Speed Session is available and setted");
+          break;
+        }
+      }
+
+      cameraDevice.createCaptureSession(
+              new SessionConfiguration(
+                      sessionConfiguration,
+                      configs,
+                      Executors.newSingleThreadExecutor(),
+                      callback));
+
+      //createCaptureSessionWithSessionConfig(configs, callback);
     } else {
+            Log.w(TAG, "Android Device does not support session configuration");
       // Collect all surfaces to render to.
       List<Surface> surfaceList = new ArrayList<>();
       surfaceList.add(flutterSurface);
@@ -486,6 +517,9 @@ class Camera
 
   @TargetApi(VERSION_CODES.P)
   private void createCaptureSessionWithSessionConfig(
+
+      Log.w(TAG, "Android createCaptureSessionWithSessionConfig");
+    
       List<OutputConfiguration> outputConfigs, CameraCaptureSession.StateCallback callback)
       throws CameraAccessException {
 
@@ -517,6 +551,7 @@ class Camera
   private void createCaptureSession(
       List<Surface> surfaces, CameraCaptureSession.StateCallback callback)
       throws CameraAccessException {
+    Log.w(TAG, "Android createCaptureSession");
     cameraDevice.createCaptureSession(surfaces, callback, backgroundHandler);
   }
 
