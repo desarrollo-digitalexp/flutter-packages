@@ -517,12 +517,9 @@ class Camera
 
   @TargetApi(VERSION_CODES.P)
   private void createCaptureSessionWithSessionConfig(
-
-      Log.w(TAG, "Android createCaptureSessionWithSessionConfig");
-    
       List<OutputConfiguration> outputConfigs, CameraCaptureSession.StateCallback callback)
       throws CameraAccessException {
-
+      Log.w(TAG, "Android createCaptureSessionWithSessionConfig");
       CameraManager cameraManager = CameraUtils.getCameraManager(activity);
       CameraCharacteristics characteristics = cameraManager.getCameraCharacteristics(cameraProperties.getCameraName());
 
@@ -538,7 +535,6 @@ class Camera
         break;
       }
     }
-
     cameraDevice.createCaptureSession(
         new SessionConfiguration(
             sessionConfiguration,
