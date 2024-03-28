@@ -527,14 +527,14 @@ class Camera
             CameraCharacteristics.REQUEST_AVAILABLE_CAPABILITIES);
       int sessionConfiguration = SessionConfiguration.SESSION_REGULAR;
 
-      for (int i = 0; i < capabilities.length ; i++) {
-      int capability = capabilities[i];
-      if (capability == CameraMetadata.REQUEST_AVAILABLE_CAPABILITIES_CONSTRAINED_HIGH_SPEED_VIDEO){
-        sessionConfiguration = SessionConfiguration.SESSION_HIGH_SPEED;
-        Log.w(TAG, "Android High Speed Session is available and setted");
-        break;
-      }
-    }
+    //   for (int i = 0; i < capabilities.length ; i++) {
+    //   int capability = capabilities[i];
+    //   if (capability == CameraMetadata.REQUEST_AVAILABLE_CAPABILITIES_CONSTRAINED_HIGH_SPEED_VIDEO){
+    //     sessionConfiguration = SessionConfiguration.SESSION_HIGH_SPEED;
+    //     Log.w(TAG, "Android High Speed Session is available and setted");
+    //     break;
+    //   }
+    // }
     cameraDevice.createCaptureSession(
         new SessionConfiguration(
             sessionConfiguration,
