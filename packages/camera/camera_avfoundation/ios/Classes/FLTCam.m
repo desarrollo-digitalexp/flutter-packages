@@ -185,6 +185,7 @@ NSString *const errorMethod = @"error";
       AVCaptureVideoStabilizationMode stabilizationMode = connection.activeVideoStabilizationMode;
       NSLog(@"PRINT stabilizationMode");
       NSLog(@"%d", stabilizationMode);
+      NSLog(@"%d", supportedStabilizationModes);
   }    
 
   return self;
@@ -226,6 +227,7 @@ NSString *const errorMethod = @"error";
     }
       NSLog(@"PRINT stabilizationMode");
       NSLog(@"%d", stabilizationMode);
+      NSLog(@"%d", supportedStabilizationModes);
   }
 
   return connection;
