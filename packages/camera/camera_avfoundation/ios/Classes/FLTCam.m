@@ -174,7 +174,14 @@ NSString *const errorMethod = @"error";
   [self updateOrientation];
     
   if (connection.isVideoStabilizationSupported) {
-    connection.preferredVideoStabilizationMode = AVCaptureVideoStabilizationModeCinematic;
+    NSArray *supportedStabilizationModes = connection.availableVideoStabilizationModes;
+    AVCaptureVideoStabilizationMode desiredStabilizationMode = AVCaptureVideoStabilizationModeCinematic;
+
+    if ([supportedStabilizationModes containsObject:@(desiredStabilizationMode)]) {
+      connection.preferredVideoStabilizationMode = desiredStabilizationMode;
+    } else {
+      connection.preferredVideoStabilizationMode = AVCaptureVideoStabilizationModeStandard;
+    }
       AVCaptureVideoStabilizationMode stabilizationMode = connection.activeVideoStabilizationMode;
       NSLog(@"PRINT stabilizationMode");
       NSLog(@"%d", stabilizationMode);
@@ -208,8 +215,15 @@ NSString *const errorMethod = @"error";
   }
     
   if (connection.isVideoStabilizationSupported) {
-    connection.preferredVideoStabilizationMode = AVCaptureVideoStabilizationModeCinematic;
-      AVCaptureVideoStabilizationMode stabilizationMode = connection.activeVideoStabilizationMode;
+
+    NSArray *supportedStabilizationModes = connection.availableVideoStabilizationModes;
+    AVCaptureVideoStabilizationMode desiredStabilizationMode = AVCaptureVideoStabilizationModeCinematic;
+    
+    if ([supportedStabilizationModes containsObject:@(desiredStabilizationMode)]) {
+      connection.preferredVideoStabilizationMode = desiredStabilizationMode;
+    } else {
+      connection.preferredVideoStabilizationMode = AVCaptureVideoStabilizationModeStandard;
+    }
       NSLog(@"PRINT stabilizationMode");
       NSLog(@"%d", stabilizationMode);
   }
