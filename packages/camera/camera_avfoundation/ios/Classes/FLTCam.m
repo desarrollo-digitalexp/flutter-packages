@@ -174,7 +174,7 @@ NSString *const errorMethod = @"error";
   [self updateOrientation];
     
   if (connection.isVideoStabilizationSupported) {
-    connection.preferredVideoStabilizationMode = AVCaptureVideoStabilizationModeStandard;
+    connection.preferredVideoStabilizationMode = AVCaptureVideoStabilizationModeCinematic;
       AVCaptureVideoStabilizationMode stabilizationMode = connection.activeVideoStabilizationMode;
       NSLog(@"PRINT stabilizationMode");
       NSLog(@"%d", stabilizationMode);
@@ -191,6 +191,7 @@ NSString *const errorMethod = @"error";
     return nil;
   }
 
+  //AVCaptureVideoStabilizationModeStandard;
   // Setup video capture output.
   _captureVideoOutput = [AVCaptureVideoDataOutput new];
   _captureVideoOutput.videoSettings =
@@ -207,7 +208,7 @@ NSString *const errorMethod = @"error";
   }
     
   if (connection.isVideoStabilizationSupported) {
-    connection.preferredVideoStabilizationMode = AVCaptureVideoStabilizationModeStandard;
+    connection.preferredVideoStabilizationMode = AVCaptureVideoStabilizationModeCinematic;
       AVCaptureVideoStabilizationMode stabilizationMode = connection.activeVideoStabilizationMode;
       NSLog(@"PRINT stabilizationMode");
       NSLog(@"%d", stabilizationMode);
