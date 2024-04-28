@@ -478,24 +478,26 @@ class Camera
         configs.add(new OutputConfiguration(surface));
       }
 
-       CameraManager cameraManager = CameraUtils.getCameraManager(activity);
+      //  CameraManager cameraManager = CameraUtils.getCameraManager(activity);
 
-      CameraCharacteristics characteristics = cameraManager.getCameraCharacteristics(cameraProperties.getCameraName());
+      // CameraCharacteristics characteristics = cameraManager.getCameraCharacteristics(cameraProperties.getCameraName());
 
-      int[] capabilities = characteristics.get(
-              CameraCharacteristics.REQUEST_AVAILABLE_CAPABILITIES);
+      // int[] capabilities = characteristics.get(
+      //         CameraCharacteristics.REQUEST_AVAILABLE_CAPABILITIES);
 
       int sessionConfiguration = SessionConfiguration.SESSION_REGULAR;
 
-      for (int i = 0; i < capabilities.length ; i++) {
-        int capability = capabilities[i];
-        if (capability == CameraMetadata.REQUEST_AVAILABLE_CAPABILITIES_CONSTRAINED_HIGH_SPEED_VIDEO){
-          sessionConfiguration = SessionConfiguration.SESSION_HIGH_SPEED;
-          previewRequestBuilder.set(CaptureRequest.CONTROL_AE_TARGET_FPS_RANGE, new Range<Integer>(120, 120));
-          Log.w(TAG, "Android High Speed Session is available and setted");
-          break;
-        }
-      }
+      // for (int i = 0; i < capabilities.length ; i++) {
+      //   int capability = capabilities[i];
+      //   if (capability == CameraMetadata.REQUEST_AVAILABLE_CAPABILITIES_CONSTRAINED_HIGH_SPEED_VIDEO){
+      //     sessionConfiguration = SessionConfiguration.SESSION_HIGH_SPEED;
+      //     previewRequestBuilder.set(CaptureRequest.CONTROL_AE_TARGET_FPS_RANGE, new Range<Integer>(120, 120));
+      //     Log.w(TAG, "Android High Speed Session is available and setted");
+      //     break;
+      //   }
+      // }
+
+       previewRequestBuilder.set(CaptureRequest.CONTROL_AE_TARGET_FPS_RANGE, new Range<Integer>(60, 60));
 
       cameraDevice.createCaptureSession(
               new SessionConfiguration(
