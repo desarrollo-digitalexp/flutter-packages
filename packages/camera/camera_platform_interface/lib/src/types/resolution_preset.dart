@@ -23,4 +23,7 @@ enum ResolutionPreset {
 
   /// The highest resolution available.
   max,
+
+  /// Preset for taking photos.
+  photo,
 }
